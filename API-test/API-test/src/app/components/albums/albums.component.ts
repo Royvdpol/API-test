@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {PhotosService} from "../../services/photos.service";
+import {Component, OnInit} from '@angular/core';
+import {Album, GetapidataService, Photo} from "../../services/getapidata.service";
 
 @Component({
   selector: 'app-albums',
@@ -7,14 +7,25 @@ import {PhotosService} from "../../services/photos.service";
   styleUrls: ['./albums.component.scss']
 })
 export class AlbumsComponent implements OnInit {
-  albums: any;
-  constructor(private photosService: PhotosService)
-  {
+  albums: Album[] = []
+  photos: Photo[] = []
+  photoCount = 3;
 
+  constructor(private getapidataService: GetapidataService) {
   }
 
-  ngOnInit(): void {
-    this.albums = this.photosService.getAlbums();
+  ngOnInit() {
+    this.getapidataService.getAlbumData().subscribe((albums: Album[]) => {
+      this.albums = albums;
+    })
+
+    this.getapidataService.getPhotoData().subscribe((photos: Photo[]) => {
+      this.photos = photos;
+    })
+  }
+
+  getFilteredPhotos(albumId: number): Photo[] {
+    return this.photos.filter(photo => photo.albumId === albumId).splice(0, this.photoCount)
   }
 
 }

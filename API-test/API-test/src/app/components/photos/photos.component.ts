@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core'
+import {GetapidataService} from "../../services/getapidata.service";
 
 @Component({
   selector: 'app-photos',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./photos.component.scss']
 })
 export class PhotosComponent implements OnInit {
+  photos: any[] = []
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private getapidataService: GetapidataService) {
   }
 
+  ngOnInit() {
+    this.getapidataService.getPhotoData().subscribe((photos: any) => {
+      this.photos = photos;
+    })
+  }
 }
