@@ -1,1 +1,12 @@
-<p>photos works!</p>
+<div class="row" *ngFor="let photo of photos; let i = index">
+  <div class="col-sm-4 mt-3" *ngIf=" i < 11">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ photo.title }}</h5>
+        <img class="img-thumbnail" src="#"/>
+        <p class="card-text"></p>
+        <a routerLink="photos/"></a>
+      </div>
+    </div>
+  </div>
+</div>
